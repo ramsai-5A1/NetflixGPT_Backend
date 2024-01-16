@@ -2,8 +2,7 @@ const express = require("express");
 const app = express();
 
 const { PORT } = require("./config/serverConfig");
-
-//mongodb://localhost:27017
+const { MongoClient } = require('mongodb');
 
 app.get("/dummy", (req, res) => {
     res.status(200).json({
@@ -11,6 +10,26 @@ app.get("/dummy", (req, res) => {
     });
 });
 
-app.listen(PORT, () => {
-    console.log(`Server started at port ${PORT}`);
-});
+const startTheServer = () => {
+    app.listen(PORT, () => {
+        console.log(`Server started at port ${PORT}`);
+    });
+}
+
+startTheServer();
+
+
+const connectToMongoDb = () => {
+    const mongodbUrl = "mongodb://localhost:27017";
+    const client = new MongoClient(mongodbUrl);
+    
+    client.connect()
+        .then(() => {
+            console.log("Connected to MONGODB successfully");
+        })
+        .catch((err) => {
+            console.error("Error while connecting to mongodb", err);
+        });
+}
+connectToMongoDb();
+
