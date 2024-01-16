@@ -1,27 +1,14 @@
 const bodyParser = require('body-parser');
 const express = require("express");
+const apiRoutes = require("./routes/index");
 const { MongoClient } = require('mongodb');
-
 const { PORT } = require("./config/serverConfig");
 const { MONGODB_URL } = require("./config/serverConfig");
 
 const app = express();
 app.use(bodyParser.json());
+app.use("/auth", apiRoutes);
 
-const client = new MongoClient(MONGODB_URL);
-
-app.post("/signup", (req, res) => {
-    const {email, password} = req.body;
-    const userData = { email: email, password: password};
-    const db = client.db('viewers');
-    const collection = db.collection("credentials");
-    const result = collection.insertOne(userData);
-    console.log(result);
-
-    res.status(201).json({
-        status: "Inserted successfully"
-    });
-});
 
 app.get("/dummy", (req, res) => {
     res.status(200).json({
@@ -38,6 +25,7 @@ startTheServer();
 
 
 const connectToMongoDb = () => {
+    const client = new MongoClient(MONGODB_URL);
     client.connect()
         .then(() => {
             console.log("Connected to MONGODB successfully");
