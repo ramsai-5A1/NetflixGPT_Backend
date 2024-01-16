@@ -3,3 +3,5 @@
 2. npm install dotenv
 3. npm install nodemon
 4. npm install mongodb
+5. npm install body-parser
+
