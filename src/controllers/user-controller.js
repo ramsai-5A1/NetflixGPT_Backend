@@ -6,17 +6,20 @@ const jwt = require("jsonwebtoken");
 
 const signup = async (req, res) => {
     try {
+        console.log("Signup api hitted");
         const {email, password} = req.body;
         const user = { email: email, password: password };
+
         const db = client.db("viewers");
         const collection = db.collection("credentials");
         const alreadyFound = await collection.findOne({email: email});
         if (alreadyFound) {
-            res.status(400).json({
+            res.status(201).json({
                 message: "Already user with this mail exists"
             });
             return;
         }
+
         const result = await collection.insertOne(user);
         const token = jwt.sign(user, JWT_SECRET_KEY, { expiresIn: '1h' });
         res.status(201).json({
