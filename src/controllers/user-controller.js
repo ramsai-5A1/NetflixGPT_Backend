@@ -14,15 +14,14 @@ const signup = async (req, res) => {
         const collection = db.collection("credentials");
         const alreadyFound = await collection.findOne({email: email});
         if (alreadyFound) {
-            res.status(201).json({
+            return res.status(201).json({
                 message: "Already user with this mail exists"
             });
-            return;
         }
 
         const result = await collection.insertOne(user);
         const token = jwt.sign(user, JWT_SECRET_KEY, { expiresIn: '1h' });
-        res.status(201).json({
+        return res.status(201).json({
             err: {},
             message: "User-account created successfully",
             data: {
@@ -30,45 +29,42 @@ const signup = async (req, res) => {
             },
             success: true
         });
-        return;
     } catch (error) {
-        res.status(error.statusCode).json( {
+        return res.status(error.statusCode).json( {
             err: error.explaination,
             message: error.message,
             data: {},
             success: false
         });
-        return;
     }
 }
 
 const login = async (req, res) => {
     try {
+        console.log("Login api hitted");
         const {email, password} = req.body;
         const user = {email: email, password: password};
         const db = client.db("viewers");
         const collection = db.collection("credentials");
         const result = await collection.findOne({email: email});
         if(!result) {
-            res.status(400).json({
+            return res.status(201).json({
                 err: {},
                 message: "Please sign-up first",
                 data: {},
                 success: false
             });
-            return;
         }
         else if (result.password != password) {
-            res.status(401).json( {
+            return res.status(401).json( {
                 err: {},
                 message: "Incorrect password",
                 data: {},
                 success: false
             });
-            return;
         }
         const token = jwt.sign(user, JWT_SECRET_KEY, { expiresIn: '1h' });
-        res.status(200).json({
+        return res.status(200).json({
             err: {},
             message: "Logged in successfully",
             data: {
@@ -76,24 +72,32 @@ const login = async (req, res) => {
             },
             success: true
         });
-        return;
     } catch (error) {
-        res.status(400).json({
+        return res.status(400).json({
             err: error.explaination,
             message: error.message,
             data: {},
             success: false
         });
-        return;
     }
 }
 
 const browse = async (req, res) => {
-    const {email, password} = req.user;
-    res.status(200).json({
-        message: "Brows route hit successfully",
-        email: email
-    });
+    try {
+        console.log("Browse api hitted");
+        const {email, password} = req.user;
+        return res.status(200).json({
+            message: "Brows route hit successfully",
+            email: email
+        });
+    } catch (error) {
+        return res.status(400).json({
+            err: error.explaination,
+            message: error.message,
+            data: {},
+            success: false
+        });
+    }
 }
 
 module.exports = {
