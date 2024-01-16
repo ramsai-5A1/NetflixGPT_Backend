@@ -104,8 +104,15 @@ const browse = async (req, res) => {
     }
 }
 
+const isTokenValid = async (req, res) => {
+    return res.status(200).json({
+        status: true
+    });
+}
+
 module.exports = {
     signup,
     login,
-    browse
+    browse,
+    isTokenValid
 }
