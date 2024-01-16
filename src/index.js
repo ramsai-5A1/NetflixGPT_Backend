@@ -7,7 +7,7 @@ const { MONGODB_URL } = require("./config/serverConfig");
 
 const app = express();
 app.use(bodyParser.json());
-app.use("/auth", apiRoutes);
+app.use("/api", apiRoutes);
 
 
 app.get("/dummy", (req, res) => {
