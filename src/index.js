@@ -30,6 +30,13 @@ const connectToMongoDb = () => {
         .catch((err) => {
             console.error("Error while connecting to mongodb", err);
         });
+
+    process.on('SIGINT', () => {
+        client.close();
+        process.exit();
+    });
 }
 connectToMongoDb();
+
+
 
