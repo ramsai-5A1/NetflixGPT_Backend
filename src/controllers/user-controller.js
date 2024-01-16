@@ -7,7 +7,7 @@ const jwt = require("jsonwebtoken");
 const signup = async (req, res) => {
     try {
         console.log("Signup api hitted");
-        const {email, password} = req.body;
+        const {fullName, email, password} = req.body;
         const user = { email: email, password: password };
 
         const db = client.db("viewers");
@@ -19,13 +19,15 @@ const signup = async (req, res) => {
             });
         }
 
-        const result = await collection.insertOne(user);
+        const result = await collection.insertOne({...user, fullName: fullName});
         const token = jwt.sign(user, JWT_SECRET_KEY, { expiresIn: '1h' });
         return res.status(201).json({
             err: {},
             message: "User-account created successfully",
             data: {
-                token: token
+                token: token,
+                fullName: fullName,
+                email: email
             },
             success: true
         });
@@ -68,7 +70,9 @@ const login = async (req, res) => {
             err: {},
             message: "Logged in successfully",
             data: {
-                token: token
+                token: token,
+                fullName: result.fullName,
+                email: result.email
             },
             success: true
         });
