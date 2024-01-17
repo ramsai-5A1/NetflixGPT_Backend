@@ -123,7 +123,7 @@ const giveMeMoviesData = async (req, res) => {
 const giveMeTrailersData = async (req, res) => {
     console.log("Control reached giveMeTrailersData api");
     res.status(201).json({
-        tailersData: trailers_data
+        trailersData: trailers_data
     });
 }
 
