@@ -8,6 +8,7 @@ router.post("/login", UserController.login);
 router.post("/browse", AuthRequestValidators.verifyToken, UserController.browse);
 router.post("/isTokenValid", AuthRequestValidators.verifyToken, UserController.isTokenValid);
 router.get("/getMoviesData", AuthRequestValidators.verifyToken, UserController.giveMeMoviesData);
+router.get("/getTrailersData", AuthRequestValidators.verifyToken, UserController.giveMeTrailersData);
 
 module.exports = router;
 
