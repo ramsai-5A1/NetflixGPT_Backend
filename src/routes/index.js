@@ -7,6 +7,7 @@ router.post("/signup", UserController.signup);
 router.post("/login", UserController.login);
 router.post("/browse", AuthRequestValidators.verifyToken, UserController.browse);
 router.post("/isTokenValid", AuthRequestValidators.verifyToken, UserController.isTokenValid);
+router.get("/getMoviesData", AuthRequestValidators.verifyToken, UserController.giveMeMoviesData);
 
 module.exports = router;
 

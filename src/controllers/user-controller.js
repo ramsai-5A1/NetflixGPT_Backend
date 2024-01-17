@@ -3,6 +3,7 @@ const { MongoClient } = require('mongodb');
 const client = new MongoClient(MONGODB_URL);
 const { JWT_SECRET_KEY } = require("../config/serverConfig");    
 const jwt = require("jsonwebtoken");
+const {MOCK_DATA_1} = require("../utils/Mocks/movies_list_mock");
 
 const signup = async (req, res) => {
     try {
@@ -110,9 +111,18 @@ const isTokenValid = async (req, res) => {
     });
 }
 
+const giveMeMoviesData = async (req, res) => {
+    console.log("Control Reached giveMeMoviesData api");
+    const data = MOCK_DATA_1;
+    res.status(201).json({
+        videosData: data,
+    });
+}
+
 module.exports = {
     signup,
     login,
     browse,
-    isTokenValid
+    isTokenValid, 
+    giveMeMoviesData
 }
