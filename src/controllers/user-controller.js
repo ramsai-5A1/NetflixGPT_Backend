@@ -5,6 +5,7 @@ const { JWT_SECRET_KEY } = require("../config/serverConfig");
 const jwt = require("jsonwebtoken");
 const {MOCK_DATA_1} = require("../utils/Mocks/movies_list_mock");
 const {trailers_data} = require("../utils/Mocks/trailers_list_mock");
+const { popular_movies_list } = require("../utils/Mocks/popular_movies_list_mock");
 
 const signup = async (req, res) => {
     try {
@@ -127,11 +128,19 @@ const giveMeTrailersData = async (req, res) => {
     });
 }
 
+const giveMePopularMoviesData = async (req, res) => {
+    console.log("Control reached giveMePopularMoviesData api");
+    res.status(200).json({
+        videosData: popular_movies_list
+    });
+}
+
 module.exports = {
     signup,
     login,
     browse,
     isTokenValid, 
     giveMeMoviesData,
-    giveMeTrailersData
+    giveMeTrailersData,
+    giveMePopularMoviesData
 }
