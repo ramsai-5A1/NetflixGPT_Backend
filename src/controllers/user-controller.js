@@ -6,6 +6,7 @@ const jwt = require("jsonwebtoken");
 const {MOCK_DATA_1} = require("../utils/Mocks/movies_list_mock");
 const {trailers_data} = require("../utils/Mocks/trailers_list_mock");
 const { popular_movies_list } = require("../utils/Mocks/popular_movies_list_mock");
+const { moviesList, moviesResult } = require("../utils/Mocks/constants");
 
 const signup = async (req, res) => {
     try {
@@ -135,6 +136,14 @@ const giveMePopularMoviesData = async (req, res) => {
     });
 }
 
+const giveMeOpenAiResults = async (req, res) => {
+    console.log("Control reached to giveMeOpenAiResults api");
+    res.status(200).json({
+        moviesList: moviesList,
+        moviesResult: moviesResult
+    });
+}
+
 module.exports = {
     signup,
     login,
@@ -142,5 +151,6 @@ module.exports = {
     isTokenValid, 
     giveMeMoviesData,
     giveMeTrailersData,
-    giveMePopularMoviesData
+    giveMePopularMoviesData,
+    giveMeOpenAiResults
 }

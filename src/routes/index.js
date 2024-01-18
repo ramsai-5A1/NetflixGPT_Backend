@@ -10,6 +10,7 @@ router.post("/isTokenValid", AuthRequestValidators.verifyToken, UserController.i
 router.get("/getMoviesData", AuthRequestValidators.verifyToken, UserController.giveMeMoviesData);
 router.get("/getTrailersData", AuthRequestValidators.verifyToken, UserController.giveMeTrailersData);
 router.get("/getPopularMoviesData", AuthRequestValidators.verifyToken, UserController.giveMePopularMoviesData);
+router.get("/giveMeOpenAiResults", AuthRequestValidators.verifyToken, UserController.giveMeOpenAiResults);
 
 module.exports = router;
 
